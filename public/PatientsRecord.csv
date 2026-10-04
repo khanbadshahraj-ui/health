@@ -1,0 +1,3 @@
+"Timestamp","Patient ID","Patient Name","Age","Gender","Contact","Condition / Reason for Visit","Assigned Doctor","Status","Photo URL"
+"Oct 4, 2026, 9:30:53 PM","6","Sarah Jenkins","29","Female","+1 555-0182","Mild seasonal allergies","Unassigned","Outpatient","No photo taken"
+"Oct 4, 2026, 9:34:28 PM","7","asdf","34","Male","43434434","asdasfdf","Dr. Anita Desai, MD","Outpatient","/patient-photos/patient_1791149668600_asdf.jpg"
