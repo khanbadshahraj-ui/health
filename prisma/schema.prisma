@@ -17,6 +17,7 @@ model Doctor {
   experience   String
   avatarUrl    String
   patients     Patient[]
+  appointments Appointment[]
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 }
@@ -50,3 +51,31 @@ model InventoryItem {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
+
+model Appointment {
+  id               Int      @id @default(autoincrement())
+  bookingCode      String   @unique
+  patientName      String
+  mobileNumber     String
+  email            String
+  consultationType String   // "Online Video Call" or "Physical at Hospital Inspection"
+  department       String
+  doctorId         Int?
+  doctor           Doctor?  @relation(fields: [doctorId], references: [id], onDelete: SetNull)
+  doctorName       String
+  appointmentDate  String
+  timeSlot         String
+  slotKey          String
+  otpCode          String
+  paymentStatus    String   @default("Paid (Advance)")
+  paymentMethod    String   @default("Credit/Debit Card")
+  transactionId    String
+  consultationFee  Float    @default(50.0)
+  photoUrl         String?
+  status           String   @default("Confirmed")
+  smsSent          Boolean  @default(true)
+  emailSent        Boolean  @default(true)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+

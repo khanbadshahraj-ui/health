@@ -14,6 +14,7 @@ import {
   ShieldCheck,
   ChevronRight,
   Camera,
+  CalendarClock,
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -29,6 +30,12 @@ const navItems = [
     href: '/',
     icon: LayoutDashboard,
     description: 'Clinic overview & stats',
+  },
+  {
+    name: 'Consultancy & Slots',
+    href: '/consultancy',
+    icon: CalendarClock,
+    description: 'Vacant slots & advance booking',
   },
   {
     name: 'Reception & Intake',
