@@ -1,0 +1,20 @@
+{
+  "timestamp": "2026-10-06T19:45:40.528Z",
+  "to": "khanbadshahraj@gmail.com",
+  "subject": "Appointment Confirmed #BK-940511 - AuraCare Clinic (OTP: 647964)",
+  "otp": "647964",
+  "data": {
+    "bookingCode": "BK-940511",
+    "patientName": "mustajab",
+    "patientEmail": "khanbadshahraj@gmail.com",
+    "patientMobile": "+923001189114",
+    "doctorName": "Dr. Marcus Vance, MD",
+    "doctorSpecialty": "Pediatrics",
+    "consultationType": "Physical at Hospital Inspection",
+    "appointmentDate": "2026-10-06",
+    "timeSlot": "03:30 PM - 04:00 PM",
+    "otpCode": "647964",
+    "fee": 60,
+    "transactionId": "TXN-191487"
+  }
+}

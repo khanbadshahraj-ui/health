@@ -36,6 +36,7 @@ model Patient {
   roomNumber     String?
   photoUrl       String?
   admittedDate   DateTime @default(now())
+  invoices       Invoice[]
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 }
@@ -77,5 +78,75 @@ model Appointment {
   emailSent        Boolean  @default(true)
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
+}
+
+model Invoice {
+  id                Int              @id @default(autoincrement())
+  invoiceNumber     String           @unique // e.g. "INV-PK-2026-001"
+  patientId         Int
+  patient           Patient          @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  patientName       String           // cached patient name
+  patientContact    String           // phone or email
+  department        String           // e.g. "Cardiology", "Inpatient Ward", "Radiology"
+  description       String
+  totalAmount       Float            // Total bill in PKR
+  paidAmount        Float            @default(0.0) // Settled amount in PKR
+  outstandingAmount Float            // Remaining payable amount in PKR
+  currency          String           @default("PKR")
+  status            String           @default("UNPAID") // "UNPAID", "PARTIALLY_PAID", "PAID", "CANCELLED"
+  dueDate           DateTime?
+  items             InvoiceItem[]
+  paymentAttempts   PaymentAttempt[]
+  paymentRecords    PaymentRecord[]
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+}
+
+model InvoiceItem {
+  id          Int      @id @default(autoincrement())
+  invoiceId   Int
+  invoice     Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  description String
+  quantity    Int      @default(1)
+  unitPrice   Float
+  total       Float
+  createdAt   DateTime @default(now())
+}
+
+model PaymentAttempt {
+  id               Int       @id @default(autoincrement())
+  attemptId        String    @unique // UUID for this attempt
+  invoiceId        Int
+  invoice          Invoice   @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  idempotencyKey   String?   @unique
+  amount           Float     // Amount intended to be paid in PKR
+  currency         String    @default("PKR")
+  provider         String    @default("SAFEPAY") // "SAFEPAY" or "SIMULATOR"
+  gatewayMode      String    @default("SANDBOX") // "SANDBOX" or "SIMULATOR"
+  trackerToken     String?   @unique // Safepay order tracker token or simulator reference
+  status           String    @default("PENDING") // "PENDING", "COMPLETED", "FAILED", "CANCELLED"
+  checkoutUrl      String?
+  errorMessage     String?
+  paymentMethod    String?   // "card", "easypaisa", "jazzcash"
+  metadata         String?   // JSON payload for extra debug/audit info
+  completedAt      DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+}
+
+model PaymentRecord {
+  id               Int       @id @default(autoincrement())
+  receiptNumber    String    @unique // e.g. "REC-PK-2026-001"
+  invoiceId        Int
+  invoice          Invoice   @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  attemptId        String?
+  providerTxnRef   String    @unique // Authoritative reference from gateway/tracker
+  amount           Float     // Verified amount settled in PKR
+  currency         String    @default("PKR")
+  gatewayMode      String    // "SANDBOX" or "SIMULATOR"
+  paymentMethod    String    // "Credit/Debit Card", "EasyPaisa", "JazzCash"
+  verifiedAt       DateTime  @default(now())
+  receiptNotes     String?
+  createdAt        DateTime  @default(now())
 }
 

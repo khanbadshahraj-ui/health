@@ -1,0 +1,20 @@
+{
+  "timestamp": "2026-10-06T19:41:52.338Z",
+  "to": "ayesha.noor@example.com",
+  "subject": "Appointment Confirmed #BK-712291 - AuraCare Clinic (OTP: 401212)",
+  "otp": "401212",
+  "data": {
+    "bookingCode": "BK-712291",
+    "patientName": "Ayesha Noor",
+    "patientEmail": "ayesha.noor@example.com",
+    "patientMobile": "+92 321 5556677",
+    "doctorName": "Dr. Marcus Vance, MD",
+    "doctorSpecialty": "Cardiology",
+    "consultationType": "Physical at Hospital Inspection",
+    "appointmentDate": "2026-10-06",
+    "timeSlot": "04:30 PM - 05:00 PM",
+    "otpCode": "401212",
+    "fee": 60,
+    "transactionId": "TXN-591324"
+  }
+}

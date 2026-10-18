@@ -1250,12 +1250,25 @@ function doPost(e) {
                       <span>Email to Patient ({confirmedBooking.notifications?.patientEmail?.to})</span>
                     </span>
                     <span className="text-[10px] font-bold text-blue-700 bg-blue-100 px-2 py-0.5 rounded-full">
-                      Sent to Inbox
+                      {confirmedBooking.notifications?.patientEmail?.status || 'Sent to Inbox'}
                     </span>
                   </div>
                   <p className="text-[11px] text-slate-600 font-mono leading-relaxed">
                     Subject: {confirmedBooking.notifications?.patientEmail?.subject}
                   </p>
+                  {confirmedBooking.notifications?.patientEmail?.previewUrl && (
+                    <div className="pt-1">
+                      <a
+                        href={confirmedBooking.notifications.patientEmail.previewUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-[11px] text-blue-600 hover:text-blue-800 font-semibold underline inline-flex items-center gap-1"
+                      >
+                        <span>View Dispatched Email Preview / Log</span>
+                        <ExternalLink className="w-3 h-3" />
+                      </a>
+                    </div>
+                  )}
                 </div>
               </div>
 

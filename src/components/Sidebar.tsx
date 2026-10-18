@@ -15,6 +15,7 @@ import {
   ChevronRight,
   Camera,
   CalendarClock,
+  CreditCard,
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -30,6 +31,12 @@ const navItems = [
     href: '/',
     icon: LayoutDashboard,
     description: 'Clinic overview & stats',
+  },
+  {
+    name: 'Billing & Invoices',
+    href: '/billing',
+    icon: CreditCard,
+    description: 'PKR Invoices & Pay Online Sandbox',
   },
   {
     name: 'Consultancy & Slots',

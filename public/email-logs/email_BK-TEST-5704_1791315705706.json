@@ -1,0 +1,20 @@
+{
+  "timestamp": "2026-10-06T19:41:45.706Z",
+  "to": "patient.khurram@example.com",
+  "subject": "Appointment Confirmed #BK-TEST-5704 - AuraCare Clinic (OTP: 849201)",
+  "otp": "849201",
+  "data": {
+    "bookingCode": "BK-TEST-5704",
+    "patientName": "Khurram Shehzad",
+    "patientEmail": "patient.khurram@example.com",
+    "patientMobile": "+92 300 9876543",
+    "doctorName": "Dr. Sarah Jenkins, MD",
+    "doctorSpecialty": "Cardiology",
+    "consultationType": "Online Video Call",
+    "appointmentDate": "2026-10-06",
+    "timeSlot": "11:00 AM - 11:30 AM",
+    "otpCode": "849201",
+    "fee": 45,
+    "transactionId": "TXN-EM-705705"
+  }
+}

@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import fs from 'fs';
 import path from 'path';
+import { sendAppointmentConfirmationEmail } from '@/lib/email/mailer';
 
 export const dynamic = 'force-dynamic';
 
@@ -9,7 +10,7 @@ const CSV_FILE_PATH = path.join(process.cwd(), 'public', 'AppointmentsRecord.csv
 const PHOTOS_DIR = path.join(process.cwd(), 'public', 'patient-photos');
 
 // Standard daily consultancy time slots
-export const STANDARD_TIME_SLOTS = [
+const STANDARD_TIME_SLOTS = [
   '09:00 AM - 09:30 AM',
   '09:30 AM - 10:00 AM',
   '10:00 AM - 10:30 AM',
@@ -396,7 +397,30 @@ export async function POST(request: Request) {
       }
     }
 
-    // 7. Notification Logs Simulation
+    // 7. Dispatch Confirmation Email via Mailer (Nodemailer / Ethereal / Local Log)
+    let emailDispatchResult = null;
+    if (newAppointment.email && newAppointment.email.includes('@')) {
+      try {
+        emailDispatchResult = await sendAppointmentConfirmationEmail({
+          bookingCode: newAppointment.bookingCode,
+          patientName: newAppointment.patientName,
+          patientEmail: newAppointment.email,
+          patientMobile: newAppointment.mobileNumber,
+          doctorName: newAppointment.doctorName,
+          doctorSpecialty: dept,
+          consultationType: newAppointment.consultationType,
+          appointmentDate: newAppointment.appointmentDate,
+          timeSlot: newAppointment.timeSlot,
+          otpCode: newAppointment.otpCode,
+          fee: newAppointment.consultationFee,
+          transactionId: newAppointment.transactionId,
+        });
+      } catch (mailErr: any) {
+        console.error('Email dispatch error:', mailErr);
+      }
+    }
+
+    // 8. Notification Logs Simulation
     const notifications = {
       otp: otpCode,
       patientSms: {
@@ -415,7 +439,9 @@ export async function POST(request: Request) {
         to: email || 'patient@domain.com',
         subject: `Appointment Confirmation #${bookingCode} - AuraCare Clinic`,
         content: `Dear ${patientName}, your ${consultationType} with ${doctorName} is confirmed for ${appDate} (${timeSlot}). Verification OTP: ${otpCode}. Transaction ID: ${transactionId}.`,
-        status: email ? 'Sent to Inbox' : 'Skipped (No Email)',
+        status: emailDispatchResult?.sent ? `Dispatched (${emailDispatchResult.mode})` : email ? 'Sent to Inbox' : 'Skipped (No Email)',
+        previewUrl: emailDispatchResult?.previewUrl || null,
+        messageId: emailDispatchResult?.messageId || null,
         time: new Date().toLocaleTimeString(),
       },
       doctorEmail: {
