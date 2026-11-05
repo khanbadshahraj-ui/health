@@ -33,3 +33,5 @@ next-env.d.ts
 
 # Prisma SQLite local temporary / locks
 prisma/*.db-journal
+
+.vercel
