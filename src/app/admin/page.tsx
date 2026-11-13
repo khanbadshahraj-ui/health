@@ -193,14 +193,23 @@ export default function AdminDashboardPage() {
               </p>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
+              <a
+                href="/AuraCare_Master_Credentials.txt"
+                download="AuraCare_Master_Credentials.txt"
+                className="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-extrabold flex items-center gap-1.5 transition shadow"
+              >
+                <Download className="w-3.5 h-3.5" />
+                <span>Download Notepad (.txt)</span>
+              </a>
+
               <a
                 href="/MASTER_CREDENTIALS.md"
                 download="AuraCare_Master_Credentials.md"
                 className="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs font-bold flex items-center gap-1.5 transition"
               >
                 <Download className="w-3.5 h-3.5" />
-                <span>Export Markdown File</span>
+                <span>Export Markdown (.md)</span>
               </a>
 
               <a
