@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import Modal from '@/components/Modal';
+import LockedPageGate from '@/components/LockedPageGate';
 import {
   Stethoscope,
   Phone,
@@ -144,7 +145,8 @@ export default function DoctorsPage() {
   };
 
   return (
-    <div className="flex-1 bg-transparent min-h-screen flex flex-col">
+    <LockedPageGate pageTitle="Physician & Doctor Registry">
+      <div className="flex-1 bg-transparent min-h-screen flex flex-col">
       <Header
         title="Doctor & Staff Registry"
         subtitle="Manage clinical staff, assigned specialties, and instant duty availability"
@@ -452,5 +454,6 @@ export default function DoctorsPage() {
         </form>
       </Modal>
     </div>
+    </LockedPageGate>
   );
 }

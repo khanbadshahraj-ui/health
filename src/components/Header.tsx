@@ -36,10 +36,10 @@ export default function Header({ title, subtitle }: HeaderProps) {
   });
 
   return (
-    <header className="bg-white/90 backdrop-blur-md sticky top-0 z-20 border-b border-slate-200/80 px-8 py-4 flex items-center justify-between gap-4">
-      <div>
-        <h2 className="text-2xl font-bold text-slate-900 tracking-tight">{title}</h2>
-        {subtitle && <p className="text-xs text-slate-500 font-medium mt-0.5">{subtitle}</p>}
+    <header className="bg-white/90 backdrop-blur-md sticky top-0 z-20 border-b border-slate-200/80 px-4 sm:px-8 py-3 sm:py-4 flex items-center justify-between gap-4">
+      <div className="min-w-0">
+        <h2 className="text-lg sm:text-2xl font-bold text-slate-900 tracking-tight truncate">{title}</h2>
+        {subtitle && <p className="text-[11px] sm:text-xs text-slate-500 font-medium mt-0.5 line-clamp-1">{subtitle}</p>}
       </div>
 
       <div className="flex items-center gap-4">

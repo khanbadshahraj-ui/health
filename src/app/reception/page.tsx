@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Header from '@/components/Header';
+import LockedPageGate from '@/components/LockedPageGate';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Camera,
@@ -297,7 +298,8 @@ function doPost(e) {
 }`;
 
   return (
-    <div className="flex-1 bg-transparent min-h-screen flex flex-col">
+    <LockedPageGate pageTitle="Reception & Patient Intake Desk" requiredDepartment="Reception">
+      <div className="flex-1 bg-transparent min-h-screen flex flex-col">
       <Header
         title="Reception & Intake Desk"
         subtitle="Capture incoming patient photos via laptop or external camera & sync with PatientsRecord Google Sheet"
@@ -971,5 +973,6 @@ function doPost(e) {
         )}
       </AnimatePresence>
     </div>
+    </LockedPageGate>
   );
 }

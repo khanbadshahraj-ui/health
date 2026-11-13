@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import Modal from '@/components/Modal';
+import LockedPageGate from '@/components/LockedPageGate';
 import {
   Package,
   Plus,
@@ -170,7 +171,8 @@ export default function InventoryPage() {
   const lowStockCount = items.filter((i) => i.status === 'Low Stock' || i.stock <= i.minThreshold).length;
 
   return (
-    <div className="flex-1 bg-transparent min-h-screen flex flex-col">
+    <LockedPageGate pageTitle="Inventory & Pharmacy Dispensary" requiredDepartment="Pharmacy">
+      <div className="flex-1 bg-transparent min-h-screen flex flex-col">
       <Header
         title="Inventory & Pharmacy Dispensary"
         subtitle="Track clinic supplies, pharmaceuticals, unit costs, and automated replenishment"
@@ -544,5 +546,6 @@ export default function InventoryPage() {
         </form>
       </Modal>
     </div>
+    </LockedPageGate>
   );
 }

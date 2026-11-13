@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Header from '@/components/Header';
+import LockedPageGate from '@/components/LockedPageGate';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -91,7 +92,8 @@ export default function AdminDashboardPage() {
   ];
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <LockedPageGate pageTitle="Hospital Administration Security Center" requiredRole="ADMIN">
+      <div className="flex flex-col min-h-screen">
       <Header
         title="Hospital Administration & Security Center"
         subtitle="Manage master credentials, assign user access, and oversee departmental operations"
@@ -394,5 +396,6 @@ export default function AdminDashboardPage() {
         </div>
       </div>
     </div>
+    </LockedPageGate>
   );
 }

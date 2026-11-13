@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Header from '@/components/Header';
+import LockedPageGate from '@/components/LockedPageGate';
 import { useAuth } from '@/context/AuthContext';
 import Link from 'next/link';
 import {
@@ -69,7 +70,8 @@ export default function DepartmentDashboardPage() {
   const stats = data?.stats || { totalPatients: 0, totalAppointments: 0, totalInvoices: 0, revenuePKR: 0, pendingPKR: 0 };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <LockedPageGate pageTitle={`${deptName} Clinical Console`} requiredDepartment={deptName} departmentName={deptName}>
+      <div className="flex flex-col min-h-screen">
       <Header
         title={`${deptName} Department`}
         subtitle={`Clinical Console & Physician Dashboard • ${doctor?.name || 'Assigned Specialist'}`}
@@ -367,5 +369,6 @@ export default function DepartmentDashboardPage() {
         )}
       </div>
     </div>
+    </LockedPageGate>
   );
 }

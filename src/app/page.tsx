@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Header from '@/components/Header';
 import MetricCard from '@/components/MetricCard';
+import LockedPageGate from '@/components/LockedPageGate';
 import {
   Users,
   UserCheck,
@@ -116,7 +117,8 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="flex-1 bg-transparent min-h-screen flex flex-col">
+    <LockedPageGate pageTitle="Executive Clinic Dashboard">
+      <div className="flex-1 bg-transparent min-h-screen flex flex-col">
       <Header
         title="Clinic Dashboard"
         subtitle="Real-time clinical operations, patient intake & pharmacy inventory"
@@ -434,5 +436,6 @@ export default function DashboardPage() {
         </div>
       </div>
     </div>
+    </LockedPageGate>
   );
 }
