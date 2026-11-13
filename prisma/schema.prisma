@@ -18,6 +18,7 @@ model Doctor {
   avatarUrl    String
   patients     Patient[]
   appointments Appointment[]
+  users        User[]
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 }
@@ -150,3 +151,20 @@ model PaymentRecord {
   createdAt        DateTime  @default(now())
 }
 
+model User {
+  id             Int       @id @default(autoincrement())
+  username       String    @unique
+  password       String    // secure password
+  name           String
+  role           String    // "ADMIN", "DOCTOR", "STAFF"
+  department     String    // "Administration", "Cardiology", "Pediatrics", "Orthopedics", "Dermatology", "General Practice", "Reception", "Billing", "Pharmacy"
+  doctorId       Int?      // Link to Doctor model if role is DOCTOR
+  doctor         Doctor?   @relation(fields: [doctorId], references: [id], onDelete: SetNull)
+  email          String    @unique
+  contact        String?
+  designation    String?   // e.g. "Medical Director", "Consultant Cardiologist", "Senior Intake Officer"
+  isActive       Boolean   @default(true)
+  lastLogin      DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
