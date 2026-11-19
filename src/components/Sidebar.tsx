@@ -42,7 +42,7 @@ export default function Sidebar() {
   const publicNavItems = [
     {
       name: 'Home',
-      href: '/home',
+      href: '/',
       icon: Home,
       description: 'Clinic introduction & video tour',
       badge: 'Public',
@@ -69,7 +69,7 @@ export default function Sidebar() {
   const lockedNavItems = [
     {
       name: 'Executive Dashboard',
-      href: '/',
+      href: '/dashboard',
       icon: LayoutDashboard,
       description: 'Clinic overview & operational KPIs',
       badge: 'Staff Only',
@@ -129,22 +129,22 @@ export default function Sidebar() {
   const renderNavContent = () => (
     <div className="flex flex-col h-full">
       {/* Brand Header */}
-      <div className="p-5 border-b border-slate-100 flex items-center justify-between">
-        <Link href="/home" className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-700 via-emerald-600 to-teal-500 flex items-center justify-center text-white shadow-md shadow-emerald-500/20">
+      <div className="p-4 sm:p-5 border-b border-slate-100 flex items-center justify-between">
+        <Link href="/" className="flex items-center gap-2.5 sm:gap-3">
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-tr from-emerald-700 via-emerald-600 to-teal-500 flex items-center justify-center text-white shadow-md shadow-emerald-500/20">
             <Activity className="w-5 h-5 stroke-[2.5]" />
           </div>
           <div>
-            <h1 className="font-bold text-base text-slate-900 tracking-tight flex items-center gap-1.5">
+            <h1 className="font-bold text-sm sm:text-base text-slate-900 tracking-tight flex items-center gap-1.5">
               AuraCare <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold uppercase tracking-wider">Clinic</span>
             </h1>
-            <p className="text-[11px] text-slate-500 font-medium">Hospital Management</p>
+            <p className="text-[10px] sm:text-[11px] text-slate-500 font-medium">Hospital Management</p>
           </div>
         </Link>
         {mobileMenuOpen && (
           <button
             onClick={() => setMobileMenuOpen(false)}
-            className="md:hidden p-2 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100"
+            className="md:hidden p-1.5 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100"
           >
             <X className="w-5 h-5" />
           </button>
@@ -156,7 +156,7 @@ export default function Sidebar() {
         {/* Public Services Section */}
         <div className="space-y-1">
           <div className="flex items-center justify-between px-2 mb-1.5">
-            <p className="text-[11px] font-bold text-emerald-800 uppercase tracking-wider flex items-center gap-1">
+            <p className="text-[10px] sm:text-[11px] font-bold text-emerald-800 uppercase tracking-wider flex items-center gap-1">
               <CheckCircle2 className="w-3 h-3 text-emerald-600" />
               <span>Public Patient Services</span>
             </p>
@@ -166,7 +166,7 @@ export default function Sidebar() {
           </div>
 
           {publicNavItems.map((item) => {
-            const isActive = pathname === item.href;
+            const isActive = pathname === item.href || (item.href === '/' && pathname === '/home');
             const Icon = item.icon;
 
             return (
@@ -209,7 +209,7 @@ export default function Sidebar() {
         {/* Locked Staff Dashboards */}
         <div className="space-y-1 pt-3 border-t border-slate-100">
           <div className="flex items-center justify-between px-2 mb-1.5">
-            <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1">
+            <p className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1">
               <Lock className="w-3 h-3 text-amber-600" />
               <span>Staff Dashboards</span>
             </p>
@@ -261,7 +261,7 @@ export default function Sidebar() {
         {/* Doctor Department Consoles */}
         <div className="space-y-1 pt-3 border-t border-slate-100">
           <div className="flex items-center justify-between px-2 mb-1.5">
-            <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1">
+            <p className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1">
               <Building className="w-3 h-3 text-slate-400" />
               <span>Doctor Consoles</span>
             </p>
@@ -341,20 +341,20 @@ export default function Sidebar() {
       </aside>
 
       {/* 2. Mobile Top Bar (Android & iOS) */}
-      <div className="md:hidden fixed top-0 left-0 right-0 h-14 bg-white/95 backdrop-blur-lg border-b border-slate-200/80 px-4 flex items-center justify-between z-40 shadow-xs">
-        <Link href="/home" className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-700 to-teal-500 flex items-center justify-center text-white shadow-xs">
-            <Activity className="w-4 h-4 stroke-[2.5]" />
+      <div className="md:hidden fixed top-0 left-0 right-0 h-13 bg-white/95 backdrop-blur-lg border-b border-slate-200/80 px-3.5 py-2 flex items-center justify-between z-40 shadow-xs">
+        <Link href="/" className="flex items-center gap-2">
+          <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-emerald-700 to-teal-500 flex items-center justify-center text-white shadow-xs">
+            <Activity className="w-3.5 h-3.5 stroke-[2.5]" />
           </div>
           <div>
-            <h1 className="font-extrabold text-sm text-slate-900 leading-tight">AuraCare Clinic</h1>
-            <p className="text-[10px] text-slate-400 leading-none">Medical Center</p>
+            <h1 className="font-extrabold text-xs text-slate-900 leading-tight">AuraCare Clinic</h1>
+            <p className="text-[9px] text-slate-400 leading-none">Medical Center</p>
           </div>
         </Link>
 
         <div className="flex items-center gap-2">
           {user ? (
-            <div className="flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 px-2 py-1 rounded-lg text-[10px] font-bold text-emerald-800">
+            <div className="flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-lg text-[10px] font-bold text-emerald-800">
               <span>{user.name.split(' ')[0]}</span>
               <button onClick={() => logout()} title="Logout" className="text-slate-400 hover:text-rose-600">
                 <LogOut className="w-3 h-3" />
@@ -363,7 +363,7 @@ export default function Sidebar() {
           ) : (
             <Link
               href="/login"
-              className="px-2.5 py-1 rounded-lg bg-emerald-600 text-white font-bold text-[11px] flex items-center gap-1 shadow-xs"
+              className="px-2.5 py-1 rounded-lg bg-emerald-600 text-white font-bold text-[10px] flex items-center gap-1 shadow-xs"
             >
               <LogIn className="w-3 h-3" />
               <span>Login</span>
@@ -372,10 +372,10 @@ export default function Sidebar() {
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-xl text-slate-700 bg-slate-100 hover:bg-slate-200 transition"
+            className="p-1.5 rounded-lg text-slate-700 bg-slate-100 hover:bg-slate-200 transition"
             aria-label="Toggle Navigation Menu"
           >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
           </button>
         </div>
       </div>
@@ -396,57 +396,57 @@ export default function Sidebar() {
         </div>
       )}
 
-      {/* 4. Mobile Bottom Navigation Bar (iOS & Android thumb navigation) */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-xl border-t border-slate-200/80 px-2 py-1.5 flex items-center justify-around z-30 shadow-lg">
+      {/* 4. Squeezed Mobile Bottom Navigation Bar (Ultra-slim, safe-area aware, clean thumb ergonomics) */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-xl border-t border-slate-200/80 px-1 py-1 pb-[max(0.35rem,env(safe-area-inset-bottom))] flex items-center justify-around z-30 shadow-lg">
         <Link
-          href="/home"
-          className={`flex flex-col items-center py-1 px-2 rounded-xl transition ${
-            pathname === '/home' ? 'text-emerald-700 font-bold' : 'text-slate-500 hover:text-slate-900'
+          href="/"
+          className={`flex flex-col items-center py-0.5 px-2 rounded-lg transition ${
+            pathname === '/' || pathname === '/home' ? 'text-emerald-700 font-bold' : 'text-slate-500 hover:text-slate-900'
           }`}
         >
-          <Home className="w-5 h-5" />
-          <span className="text-[10px] mt-0.5">Home</span>
+          <Home className="w-4 h-4" />
+          <span className="text-[9px] mt-0.5 leading-none">Home</span>
         </Link>
 
         <Link
           href="/consultancy"
-          className={`flex flex-col items-center py-1 px-2 rounded-xl transition ${
+          className={`flex flex-col items-center py-0.5 px-2 rounded-lg transition ${
             pathname === '/consultancy' ? 'text-emerald-700 font-bold' : 'text-slate-500 hover:text-slate-900'
           }`}
         >
-          <CalendarClock className="w-5 h-5" />
-          <span className="text-[10px] mt-0.5">Book Slot</span>
+          <CalendarClock className="w-4 h-4" />
+          <span className="text-[9px] mt-0.5 leading-none">Book Slot</span>
         </Link>
 
         <Link
           href="/patient-portal"
-          className={`flex flex-col items-center py-1 px-2 rounded-xl transition ${
+          className={`flex flex-col items-center py-0.5 px-2 rounded-lg transition ${
             pathname === '/patient-portal' ? 'text-emerald-700 font-bold' : 'text-slate-500 hover:text-slate-900'
           }`}
         >
-          <FileText className="w-5 h-5" />
-          <span className="text-[10px] mt-0.5">My Record</span>
+          <FileText className="w-4 h-4" />
+          <span className="text-[9px] mt-0.5 leading-none">My Record</span>
         </Link>
 
         <Link
-          href="/"
-          className={`flex flex-col items-center py-1 px-2 rounded-xl transition ${
-            pathname === '/' ? 'text-emerald-700 font-bold' : 'text-slate-500 hover:text-slate-900'
+          href="/dashboard"
+          className={`flex flex-col items-center py-0.5 px-2 rounded-lg transition ${
+            pathname === '/dashboard' ? 'text-emerald-700 font-bold' : 'text-slate-500 hover:text-slate-900'
           }`}
         >
           <div className="relative">
-            <LayoutDashboard className="w-5 h-5" />
-            <span className="absolute -top-1 -right-1.5 w-2 h-2 rounded-full bg-amber-500" />
+            <LayoutDashboard className="w-4 h-4" />
+            <span className="absolute -top-0.5 -right-1 w-1.5 h-1.5 rounded-full bg-amber-500" />
           </div>
-          <span className="text-[10px] mt-0.5">Staff Portal</span>
+          <span className="text-[9px] mt-0.5 leading-none">Dashboard</span>
         </Link>
 
         <button
           onClick={() => setMobileMenuOpen(true)}
-          className="flex flex-col items-center py-1 px-2 rounded-xl text-slate-500 hover:text-slate-900"
+          className="flex flex-col items-center py-0.5 px-2 rounded-lg text-slate-500 hover:text-slate-900"
         >
-          <Menu className="w-5 h-5" />
-          <span className="text-[10px] mt-0.5">Menu</span>
+          <Menu className="w-4 h-4" />
+          <span className="text-[9px] mt-0.5 leading-none">Menu</span>
         </button>
       </div>
     </>

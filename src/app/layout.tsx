@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import Sidebar from '@/components/Sidebar';
 import { AuthProvider } from '@/context/AuthContext';
@@ -8,6 +8,14 @@ export const metadata: Metadata = {
   description: 'Modern, efficient clinic & hospital management system built for healthcare professionals.',
 };
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  viewportFit: 'cover',
+  themeColor: '#047857',
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -15,7 +23,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="min-h-screen text-slate-900 flex relative overflow-hidden bg-slate-100">
+      <head>
+        {/* Fast CDN Preconnections for Accelerated Asset Delivery */}
+        <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://images.unsplash.com" />
+        <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
+      </head>
+      <body className="min-h-[100dvh] text-slate-900 flex relative overflow-x-hidden bg-slate-100">
         <AuthProvider>
           {/* Fixed Hospital Background for all web pages */}
           <div
@@ -26,7 +41,8 @@ export default function RootLayout({
           <div className="fixed inset-0 z-0 bg-slate-50/75 backdrop-blur-[2px] pointer-events-none" />
 
           <Sidebar />
-          <main className="flex-1 flex flex-col min-w-0 h-screen overflow-y-auto relative z-10 pt-14 md:pt-0 pb-16 md:pb-0">
+          {/* Main Content: Squeezed mobile padding and dynamic viewport height to prevent bottom cutoff */}
+          <main className="flex-1 flex flex-col min-w-0 h-[100dvh] overflow-y-auto relative z-10 pt-13 md:pt-0 pb-20 sm:pb-24 md:pb-0">
             {children}
           </main>
         </AuthProvider>

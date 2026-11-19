@@ -113,7 +113,7 @@ export default function LockedPageGate({
           </Link>
 
           <Link
-            href="/home"
+            href="/"
             className="w-full sm:w-auto px-5 py-3 rounded-2xl bg-white hover:bg-slate-100 text-slate-700 font-bold text-xs border border-slate-200 transition flex items-center justify-center gap-1.5"
           >
             <Home className="w-4 h-4" />
