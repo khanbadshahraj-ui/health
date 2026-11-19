@@ -118,7 +118,7 @@ export default function DashboardPage() {
 
   return (
     <LockedPageGate pageTitle="Executive Clinic Dashboard">
-      <div className="flex-1 bg-transparent min-h-screen flex flex-col pb-24 md:pb-8">
+      <div className="flex-1 bg-transparent min-h-screen flex flex-col pb-8 md:pb-8">
         <Header
           title="Clinic Dashboard"
           subtitle="Real-time clinical operations, patient intake & pharmacy inventory"

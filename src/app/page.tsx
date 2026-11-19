@@ -212,7 +212,7 @@ export default function RootHomePage() {
   };
 
   return (
-    <div className="flex-1 bg-transparent min-h-screen flex flex-col py-4 sm:py-8 px-3.5 sm:px-6 lg:px-8 space-y-10 sm:space-y-16 max-w-7xl mx-auto w-full pb-28 sm:pb-32 md:pb-12">
+    <div className="flex-1 bg-transparent min-h-screen flex flex-col py-4 sm:py-8 px-3.5 sm:px-6 lg:px-8 space-y-10 sm:space-y-16 max-w-7xl mx-auto w-full pb-8 sm:pb-12">
       {/* Background audio track dedicated to only homepage video */}
       <audio ref={audioRef} src="/promo-music.mp3" preload="auto" loop />
 

@@ -41,8 +41,8 @@ export default function RootLayout({
           <div className="fixed inset-0 z-0 bg-slate-50/75 backdrop-blur-[2px] pointer-events-none" />
 
           <Sidebar />
-          {/* Main Content: Squeezed mobile padding and dynamic viewport height to prevent bottom cutoff */}
-          <main className="flex-1 flex flex-col min-w-0 h-[100dvh] overflow-y-auto relative z-10 pt-13 md:pt-0 pb-20 sm:pb-24 md:pb-0">
+          {/* Main Content: Shifted top menu clearance and full unobstructed bottom view */}
+          <main className="flex-1 flex flex-col min-w-0 h-[100dvh] overflow-y-auto relative z-10 pt-[82px] md:pt-0 pb-6 md:pb-0">
             {children}
           </main>
         </AuthProvider>
