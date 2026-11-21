@@ -28,6 +28,7 @@ import {
   CheckCircle2,
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
+import TopNavbar from '@/components/TopNavbar';
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -340,116 +341,12 @@ export default function Sidebar() {
         {renderNavContent()}
       </aside>
 
-      {/* 2. Mobile Always-Visible Top Navigation Header (Android & iOS) */}
-      <header className="md:hidden fixed top-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-xl border-b border-slate-200/90 shadow-sm">
-        {/* Top Brand & Auth Row */}
-        <div className="px-3 py-1.5 flex items-center justify-between border-b border-slate-100/90">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-lg bg-gradient-to-tr from-emerald-700 to-teal-500 flex items-center justify-center text-white shadow-xs">
-              <Activity className="w-3.5 h-3.5 stroke-[2.5]" />
-            </div>
-            <div className="flex items-baseline gap-1.5">
-              <span className="font-black text-xs text-slate-900 leading-tight">AuraCare</span>
-              <span className="text-[9px] font-bold text-emerald-700 uppercase tracking-wider">Clinic</span>
-            </div>
-          </Link>
+      {/* 2. Universal Always-Visible Top Navigation Header with Golden Floating Card Clock & Top Menu */}
+      <TopNavbar onOpenMobileMenu={() => setMobileMenuOpen(true)} />
 
-          <div className="flex items-center gap-1.5">
-            {user ? (
-              <div className="flex items-center gap-1 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-lg text-[10px] font-bold text-emerald-800">
-                <span className="truncate max-w-[85px]">{user.name.split(' ')[0]}</span>
-                <button onClick={() => logout()} title="Logout" className="text-slate-400 hover:text-rose-600 ml-0.5">
-                  <LogOut className="w-3 h-3" />
-                </button>
-              </div>
-            ) : (
-              <Link
-                href="/login"
-                className="px-2.5 py-0.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[10px] flex items-center gap-1 shadow-xs transition"
-              >
-                <LogIn className="w-2.5 h-2.5" />
-                <span>Staff Login</span>
-              </Link>
-            )}
-          </div>
-        </div>
-
-        {/* Shifted Top Menu Bar: Home, Book Slot, My Record, Dashboard, and Menu (Always Visible with appropriate padding) */}
-        <nav className="px-2 py-1.5 flex items-center justify-between gap-1 overflow-x-auto no-scrollbar">
-          {/* Home */}
-          <Link
-            href="/"
-            className={`flex items-center gap-1 py-1 px-2.5 rounded-xl transition text-[11px] font-bold shrink-0 ${
-              pathname === '/' || pathname === '/home'
-                ? 'bg-emerald-600 text-white shadow-xs'
-                : 'text-slate-600 hover:text-emerald-800 hover:bg-slate-100'
-            }`}
-          >
-            <Home className="w-3.5 h-3.5 shrink-0" />
-            <span>Home</span>
-          </Link>
-
-          {/* Book Slot */}
-          <Link
-            href="/consultancy"
-            className={`flex items-center gap-1 py-1 px-2.5 rounded-xl transition text-[11px] font-bold shrink-0 ${
-              pathname === '/consultancy'
-                ? 'bg-emerald-600 text-white shadow-xs'
-                : 'text-slate-600 hover:text-emerald-800 hover:bg-slate-100'
-            }`}
-          >
-            <CalendarClock className="w-3.5 h-3.5 shrink-0" />
-            <span>Book Slot</span>
-          </Link>
-
-          {/* My Record */}
-          <Link
-            href="/patient-portal"
-            className={`flex items-center gap-1 py-1 px-2.5 rounded-xl transition text-[11px] font-bold shrink-0 ${
-              pathname === '/patient-portal'
-                ? 'bg-emerald-600 text-white shadow-xs'
-                : 'text-slate-600 hover:text-emerald-800 hover:bg-slate-100'
-            }`}
-          >
-            <FileText className="w-3.5 h-3.5 shrink-0" />
-            <span>My Record</span>
-          </Link>
-
-          {/* Dashboard */}
-          <Link
-            href="/dashboard"
-            className={`flex items-center gap-1 py-1 px-2.5 rounded-xl transition text-[11px] font-bold shrink-0 ${
-              pathname === '/dashboard'
-                ? 'bg-emerald-600 text-white shadow-xs'
-                : 'text-slate-600 hover:text-emerald-800 hover:bg-slate-100'
-            }`}
-          >
-            <div className="relative">
-              <LayoutDashboard className="w-3.5 h-3.5 shrink-0" />
-              <span className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 rounded-full bg-amber-500" />
-            </div>
-            <span>Dashboard</span>
-          </Link>
-
-          {/* Menu Drawer Toggle */}
-          <button
-            onClick={() => setMobileMenuOpen(true)}
-            className={`flex items-center gap-1 py-1 px-2.5 rounded-xl transition text-[11px] font-bold shrink-0 ${
-              mobileMenuOpen
-                ? 'bg-slate-900 text-white'
-                : 'text-slate-700 bg-slate-100 hover:bg-slate-200'
-            }`}
-            aria-label="Toggle Navigation Menu"
-          >
-            <Menu className="w-3.5 h-3.5 shrink-0" />
-            <span>Menu</span>
-          </button>
-        </nav>
-      </header>
-
-      {/* 3. Mobile Slide-out Drawer */}
+      {/* 3. Slide-out Navigation Drawer for Full Hospital Consoles & Departments */}
       {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 z-50 flex">
+        <div className="fixed inset-0 z-50 flex">
           {/* Backdrop */}
           <div
             className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity"

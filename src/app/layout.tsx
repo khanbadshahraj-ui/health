@@ -42,7 +42,7 @@ export default function RootLayout({
 
           <Sidebar />
           {/* Main Content: Shifted top menu clearance and full unobstructed bottom view */}
-          <main className="flex-1 flex flex-col min-w-0 h-[100dvh] overflow-y-auto relative z-10 pt-[82px] md:pt-0 pb-6 md:pb-0">
+          <main className="flex-1 flex flex-col min-w-0 h-[100dvh] overflow-y-auto relative z-10 pt-[86px] md:pt-[58px] pb-8 md:pb-10">
             {children}
           </main>
         </AuthProvider>
