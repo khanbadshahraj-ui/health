@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { verifyPaymentTracker } from '@/lib/payments/safepay';
 import crypto from 'crypto';
+import { syncToGoogleSheets } from '@/lib/googleSheets';
 
 export async function POST(request: Request) {
   try {
@@ -161,6 +162,22 @@ export async function POST(request: Request) {
         alreadyPaid: false,
       };
     });
+
+    // Dual-Write to Google Sheets: PaymentReceipts tab for khanbadshahraj@gmail.com
+    if (result.receiptNumber) {
+      await syncToGoogleSheets({
+        sheetName: 'PaymentReceipts',
+        data: {
+          'Receipt Number': result.receiptNumber,
+          'Invoice Number': result.invoice.invoiceNumber,
+          'Amount (PKR)': verification.amount,
+          'Gateway Mode': verification.mode,
+          'Payment Method': paymentMethod || 'Safepay Emulation / Sandbox',
+          'Provider Txn Ref': verification.reference,
+          Status: 'SETTLED',
+        },
+      }).catch((err) => console.warn('Payment receipt sheet sync warning:', err.message));
+    }
 
     return NextResponse.json({
       success: true,

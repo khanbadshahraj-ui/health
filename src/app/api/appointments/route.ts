@@ -3,6 +3,7 @@ import prisma from '@/lib/prisma';
 import fs from 'fs';
 import path from 'path';
 import { sendAppointmentConfirmationEmail } from '@/lib/email/mailer';
+import { syncToGoogleSheets } from '@/lib/googleSheets';
 
 export const dynamic = 'force-dynamic';
 
@@ -377,25 +378,32 @@ export async function POST(request: Request) {
       photoUrl: photoUrl || '',
     };
 
+    // Forward to Google Sheet Webhook & Multi-sheet mirror for khanbadshahraj@gmail.com
     let sheetSynced = false;
     let sheetMessage = 'Appended to AppointmentsRecord.csv & staged for Google Sheet';
 
-    const targetWebhook = googleSheetWebhookUrl || process.env.GOOGLE_SHEET_WEBHOOK_URL;
-    if (targetWebhook) {
-      try {
-        const sheetRes = await fetch(targetWebhook, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(sheetPayload),
-        });
-        if (sheetRes.ok) {
-          sheetSynced = true;
-          sheetMessage = 'Successfully synced with Google Spreadsheet (1iSKffKlj5FJ91Z-re3WvnX76cXBCMQTc2ImcO7RRJew)';
-        }
-      } catch (sheetErr: any) {
-        console.warn('Google Sheet webhook notice:', sheetErr.message);
-      }
-    }
+    const sheetResult = await syncToGoogleSheets({
+      sheetName: 'AppointmentsRecord',
+      data: {
+        timestamp,
+        'Booking ID': newAppointment.bookingCode,
+        'Patient Name': newAppointment.patientName,
+        'Mobile Number': newAppointment.mobileNumber,
+        'Email Address': newAppointment.email,
+        'Consultation Type': newAppointment.consultationType,
+        Department: newAppointment.department,
+        'Assigned Doctor': newAppointment.doctorName,
+        'Appointment Date': newAppointment.appointmentDate,
+        'Time Slot': newAppointment.timeSlot,
+        'OTP Code': newAppointment.otpCode,
+        'Payment Status': newAppointment.paymentStatus,
+        'Fee (PKR)': newAppointment.consultationFee,
+        Status: newAppointment.status,
+      },
+    });
+
+    sheetSynced = sheetResult.sheetSynced;
+    sheetMessage = sheetResult.message;
 
     // 7. Dispatch Confirmation Email via Mailer (Nodemailer / Ethereal / Local Log)
     let emailDispatchResult = null;

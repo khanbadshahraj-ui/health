@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import fs from 'fs';
 import path from 'path';
+import { syncToGoogleSheets } from '@/lib/googleSheets';
 
 export const dynamic = 'force-dynamic';
 
@@ -184,44 +185,28 @@ export async function POST(request: Request) {
       photoUrl: photoUrl ? `${photoUrl}` : 'No photo taken',
     });
 
-    // Forward to Google Sheet Webhook if configured
+    // Forward to Google Sheet Webhook & Local Multi-sheet mirror for khanbadshahraj@gmail.com
     let sheetSynced = false;
     let sheetMessage = 'Local PatientsRecord file updated';
-    const targetWebhook = googleSheetWebhookUrl || process.env.GOOGLE_SHEET_WEBHOOK_URL;
 
-    if (targetWebhook) {
-      try {
-        const sheetPayload = {
-          sheetName: 'PatientsRecord',
-          timestamp,
-          patientId: newPatient.id,
-          name: newPatient.name,
-          age: newPatient.age,
-          gender: newPatient.gender,
-          contact: newPatient.contact,
-          condition: newPatient.condition,
-          assignedDoctor,
-          status: newPatient.status,
-          photoUrl: photoUrl || 'No photo',
-        };
+    const sheetResult = await syncToGoogleSheets({
+      sheetName: 'PatientsRecord',
+      data: {
+        timestamp,
+        'Patient ID': `PAT-${String(newPatient.id).padStart(4, '0')}`,
+        'Patient Name': newPatient.name,
+        Age: newPatient.age,
+        Gender: newPatient.gender,
+        Contact: newPatient.contact,
+        'Condition / Diagnosis': newPatient.condition,
+        'Assigned Doctor': assignedDoctor,
+        Status: newPatient.status,
+        'Photo URL': photoUrl || 'No photo taken',
+      },
+    });
 
-        const sheetRes = await fetch(targetWebhook, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(sheetPayload),
-        });
-
-        if (sheetRes.ok) {
-          sheetSynced = true;
-          sheetMessage = 'Successfully appended to PatientsRecord Google Sheet';
-        } else {
-          sheetMessage = `Google Sheet endpoint returned status ${sheetRes.status}`;
-        }
-      } catch (syncErr: any) {
-        console.warn('Google Sheet webhook sync notice:', syncErr.message);
-        sheetMessage = `Google Sheet webhook notice: ${syncErr.message}`;
-      }
-    }
+    sheetSynced = sheetResult.sheetSynced;
+    sheetMessage = sheetResult.message;
 
     return NextResponse.json({
       success: true,
